@@ -44,11 +44,11 @@ resource "kubernetes_deployment" "postgres" {
           image = "postgres:13"
 
           resources {
-            limits {
+            limits = {
               cpu    = "500m"
               memory = "512Mi"
             }
-            requests {
+            requests = {
               cpu    = "250m"
               memory = "256Mi"
             }

@@ -29,11 +29,11 @@ resource "kubernetes_deployment" "challenge_app" {
           name  = "challenge"
           image = "drmendes/challenge-app:${var.image_version}"
           resources {
-            limits {
+            limits = {
               cpu    = "500m"
               memory = "512Mi"
             }
-            requests {
+            requests = {
               cpu    = "250m"
               memory = "256Mi"
             }

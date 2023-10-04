@@ -18,3 +18,10 @@ variable "postgres_password" {
   description = "PostgreSQL Password"
   type        = string
 }
+
+variable "GCP_SA_KEY" {
+  description = "The GCP Service Account Key"
+  type        = string
+  sensitive   = true
+}
+

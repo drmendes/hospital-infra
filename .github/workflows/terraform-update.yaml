@@ -1,0 +1,26 @@
+name: Update challenge-app on Dispatch
+
+on:
+  repository_dispatch:
+    types: [challenge-app-release]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    # Fetch the latest Docker image version
+    - name: Get latest Docker image version from Docker Hub
+      run: |
+        LATEST_TAG=$(curl -s "https://registry.hub.docker.com/v2/repositories/drmendes/challenge-app/tags?page_size=1" | jq -r '.results[0].name')
+        echo "DOCKER_IMAGE_VERSION=$LATEST_TAG" >> $GITHUB_ENV
+
+    # Apply
+    - name: Setup Terraform and apply
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+      run: |
+        terraform init
+        terraform apply -var="image_version=$DOCKER_IMAGE_VERSION" -auto-approve

@@ -1,22 +1,19 @@
 provider "google" {
-  credentials = file("<SA>")
+
+  credentials = env("GCP_SA_KEY")
   project     = var.project_id
   region      = var.region
 }
 
 module "gke" {
-  source  = "./gke"
-  project = var.project_id
-  region  = var.region
+  source = "./gke"
+}
+
+module "challenge-app" {
+  source = "./challenge-app"
 }
 
 module "postgres" {
-  source  = "./postgres"
-  project = var.project_id
-  region  = var.region
+  source = "./postgres"
 }
-
-module "challenge_app" {
-  source  = "./challenge-app"
-  cluster = module.gke.cluster_name
 

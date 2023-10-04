@@ -1,0 +1,27 @@
+name: Manual deploy to GKE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Apply
+      env:
+        POSTGRES_USER: ${{ secrets.postgres_username }}
+        POSTGRES_PASSWORD: ${{ secrets.postgres_password }}
+        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+      run: |
+        terraform apply -var="postgres_username=$POSTGRES_USER" -var="postgres_password=$POSTGRES_PASSWORD" -auto-approve
+

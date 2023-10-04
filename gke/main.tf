@@ -1,9 +1,9 @@
-resource "google_container_cluster" "primary" {
-  name     = "challenge-cluster"
+data "google_container_cluster" "primary" {
+  name     = "autopilot-cluster-1"
   location = var.region
 }
 
 output "endpoint" {
-  value = google_container_cluster.primary.endpoint
+  value = data.google_container_cluster.primary.endpoint
 }
 

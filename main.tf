@@ -15,5 +15,8 @@ module "challenge-app" {
 
 module "postgres" {
   source = "./postgres"
+  
+  postgres_username = var.postgres_username
+  postgres_password = var.postgres_password
 }
 

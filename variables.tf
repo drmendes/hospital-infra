@@ -8,3 +8,13 @@ variable "region" {
   description = "The region in which to provision resources."
   default     = "europe-west1"
 }
+
+variable "postgres_username" {
+  description = "PostgreSQL Username"
+  type        = string
+}
+
+variable "postgres_password" {
+  description = "PostgreSQL Password"
+  type        = string
+}
